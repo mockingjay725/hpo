@@ -1,0 +1,7 @@
+streamlit
+pandas
+sentence-transformers
+scikit-learn
+matplotlib
+seaborn
+zipfile36  # for handling zip files
