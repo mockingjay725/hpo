@@ -13,12 +13,17 @@ import streamlit as st
 import pandas as pd
 from sentence_transformers import SentenceTransformer, util
 import torch
+import zipfile
 
 # --- SECTION 1: Load Datasets ---
 @st.cache_data
 def load_data():
     symptom_df = pd.read_csv("hpo_cleaned.csv").dropna(subset=["id", "name", "definition"])
-    gene_df = pd.read_csv("orphanet_phenotype_to_genes.csv")
+    
+    with zipfile.ZipFile("orphanet_phenotype_to_genes.zip", 'r') as zip_ref:
+    with zip_ref.open("orphanet_phenotype_to_genes.csv") as file:
+        gene_df = pd.read_csv(file)
+
     rd_df = pd.read_csv("cleaned_rare_disabilities.csv")
     return symptom_df, gene_df, rd_df
 
